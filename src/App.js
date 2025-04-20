@@ -13,19 +13,19 @@ const App = () => {
   const sections = [
     {
       id: 'team',
-      title: 'Our Team',
+      title: 'Team',
       content:
         'Our team consists of licensed psychologists with over 10 years of experience in various fields including cognitive behavioral therapy, mindfulness-based therapy, and psychodynamic approaches.',
     },
     {
       id: 'expertise',
-      title: 'Our Expertise',
+      title: 'Expertise',
       content:
         'We specialize in anxiety disorders, depression, trauma, relationships, and work-related stress. Our evidence-based approaches are tailored to meet your individual needs.',
     },
     {
       id: 'ambience',
-      title: 'Our Ambience',
+      title: 'Ambience',
       content:
         'Our clinic provides a calm, confidential space designed to help you feel comfortable and safe. Each session room is thoughtfully designed with soft lighting and comfortable seating.',
     },
@@ -103,33 +103,34 @@ const App = () => {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50 text-gray-800">
+      
       <header className="p-4 border-b border-gray-200 flex items-center justify-between">
-  {/* Left-aligned Logo */}
-  <div className="text-xl font-semibold flex items-center space-x-2">
-    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-      <path
-        fillRule="evenodd"
-        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-        clipRule="evenodd"
-      />
-    </svg>
-  </div>
+        {/* Left-aligned Logo */}
+        <div className="text-xl font-semibold flex items-center space-x-2">
+          <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              fillRule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </div>
 
-  {/* Centered cards when conversation starts */}
-  {conversation.length > 0 && (
-    <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4">
-      {sections.map((section) => (
-        <button
-          key={section.id}
-          onClick={() => handleSectionClick(section)}
-          className="px-4 py-2 bg-white text-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200"
-        >
-          {section.title}
-        </button>
-      ))}
-    </div>
-  )}
-</header>
+        {/* Centered cards when conversation starts */}
+        {conversation.length > 0 && (
+          <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4">
+            {sections.map((section) => (
+              <button
+                key={section.id}
+                onClick={() => handleSectionClick(section)}
+                className="px-4 py-2 bg-white text-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200"
+              >
+                {section.title}
+              </button>
+            ))}
+          </div>
+        )}
+      </header>
 
 
       <main className="flex-1 overflow-auto p-4 flex flex-col">
