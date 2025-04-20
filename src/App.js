@@ -75,7 +75,7 @@ const App = () => {
     setIsTyping(true);
     setTypedText('');
 
-    let index = 0;
+    let index = -1;
     const intervalId = setInterval(() => {
       if (index < question.text.length) {
         setTypedText((prevText) => prevText + question.text.charAt(index));
