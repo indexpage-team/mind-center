@@ -16,6 +16,7 @@ const App = () => {
       title: 'Team',
       content:
         'Our team consists of licensed psychologists with over 10 years of experience in various fields including cognitive behavioral therapy, mindfulness-based therapy, and psychodynamic approaches.',
+      image: '/images/team-photo.jpg', // Replace with your actual image path
     },
     {
       id: 'expertise',
@@ -30,33 +31,66 @@ const App = () => {
         'Our clinic provides a calm, confidential space designed to help you feel comfortable and safe. Each session room is thoughtfully designed with soft lighting and comfortable seating.',
     },
   ];
+  
 
   const questions = [
     {
       id: 'q1',
-      text: 'What is your approach to therapy?',
-      answer:
-        "We take an integrative approach to therapy, drawing from various evidence-based methods including CBT, mindfulness techniques, and psychodynamic therapy. We believe in tailoring our approach to each client's specific needs and goals.",
+      text: 'Can I get an experienced counselor?',
+      answer: 'Yes, your counselor has over 10 years of experience and is well-versed in handling today\'s real-world challenges.',
     },
     {
       id: 'q2',
-      text: 'How long does a typical session last?',
-      answer:
-        'Our standard sessions are 50 minutes long, which is the clinical hour. For initial consultations, we allocate 60 minutes to ensure we have enough time to understand your needs properly.',
+      text: 'Will the counseling be confidential?',
+      answer: 'Absolutely. Everything you share in counseling stays completely confidential. Your privacy and trust are our top priorities. Many celebrities and public figures have also chosen us for their counseling needs, trusting us with their personal journeys.',
     },
     {
       id: 'q3',
-      text: 'Do you accept insurance?',
-      answer:
-        "Yes, we accept most major insurance plans. We recommend contacting your insurance provider to verify your mental health benefits before your first appointment. We're also happy to provide any necessary documentation.",
+      text: 'I am a woman. Can I get a woman counselor?',
+      answer: 'Yes, of course. Nurora is a women-owned counseling center, and our entire team is made up of experienced women counselors. We understand your needs and are here to support you with care and understanding.',
     },
     {
       id: 'q4',
-      text: 'How do I know if therapy is right for me?',
-      answer:
-        'Therapy can be beneficial for anyone looking to improve their mental wellbeing, work through challenges, or develop better coping strategies. We offer a free 15-minute consultation call to discuss your specific situation and determine if our services would be a good fit.',
+      text: 'I am a man. Can I get a woman counselor?',
+      answer: 'Yes, absolutely. As a man, gaining a woman’s perspective can bring powerful insights into your healing journey. And beyond that, your counselor is a trained professional. Nurora is a women-led center, with a full team of experienced women counselors here to guide you with care and expertise.',
+    },
+    {
+      id: 'q5',
+      text: 'What will be the duration of my session?',
+      answer: '“You matter more than the clock ❤️” At Nurora, we don’t believe in cutting you off when you’re emotionally opening up. There’s no strict time limit — don’t worry about the clock. We’re here to listen, understand, and be with you fully.',
+    },
+    {
+      id: 'q6',
+      text: 'How will the ambience be?',
+      answer: 'Nurora is designed to feel nothing like a regular clinic. Every detail of our space is crafted to help you feel calm, safe, and connected. To truly catch the aura, we invite you to take a look at what people say about us.',
+    },
+    {
+      id: 'q7',
+      text: 'Can I be in touch with the counsellor?',
+      answer: 'Absolutely. At Nurora, we believe healing continues even outside the therapy room. You can stay in touch with your counsellor through scheduled follow-ups and gentle check-ins. You’re also welcome to send small doubts as voice notes during your counsellor’s available hours. We’re here for you, every step of the way.',
+    },
+    {
+      id: 'q8',
+      text: 'Can I know my counsellor?',
+      answer: 'Of course. Once you share the category of your concern — for example, Relationship ➔ Pre-marital — we’ll match you with the most suitable psychologist. For instance, you might meet Ms. Priyanka, who specializes in pre-marital counselling. You’ll get to see her photo, read about her expertise, and even check out the reviews shared by her previous clients. We believe knowing your counsellor helps you feel even safer and connected.',
+    },
+    {
+      id: 'q9',
+      text: 'I have a fear of being judged. Will I be judged here?',
+      answer: 'We hear you. In today’s world, many of us carry the fear of being judged. That’s why at Nurora, we’ve created a special space — a space where you are met with understanding, not judgment. Here, your thoughts, emotions, and experiences are safe, respected, and honored. You matter just as you are.',
+    },
+    {
+      id: 'q10',
+      text: 'Do I need a prior appointment or can I walk in?',
+      answer: 'While walk-ins are welcome if there is a slot available, we highly recommend booking in advance to ensure your time is reserved without wait. This helps us give you the full attention you deserve.',
+    },
+    {
+      id: 'q11',
+      text: 'What can I expect more?',
+      answer: 'Coffee!!! Come, let’s talk over a coffee ☕️. But if you\'re a chai person... don’t worry, your cup of chai is waiting too! 🍵',
     },
   ];
+  
 
   const messagesEndRef = useRef(null);
 
@@ -104,7 +138,8 @@ const App = () => {
   return (
     <div className="flex flex-col h-screen bg-gray-50 text-gray-800">
       
-      <header className="p-4 border-b border-gray-200 flex items-center justify-between">
+      <header className="p-4 border-b border-gray-200 flex items-center justify-between relative z-20 bg-white">
+
         {/* Left-aligned Logo */}
         <div className="text-xl font-semibold flex items-center space-x-2">
           <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
@@ -118,18 +153,21 @@ const App = () => {
 
         {/* Centered cards when conversation starts */}
         {conversation.length > 0 && (
-          <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => handleSectionClick(section)}
-                className="px-4 py-2 bg-white text-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200"
-              >
-                {section.title}
-              </button>
-            ))}
+          <div className="flex-grow flex justify-center z-10">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+              {sections.map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => handleSectionClick(section)}
+                  className="px-4 py-2 bg-white text-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200 text-sm"
+                >
+                  {section.title}
+                </button>
+              ))}
+            </div>
           </div>
         )}
+
       </header>
 
 
@@ -160,10 +198,18 @@ const App = () => {
                 </svg>
               </button>
               <h3 className="text-lg font-medium mb-2">{selectedSection.title}</h3>
-              <p className="text-gray-600">{selectedSection.content}</p>
+              <p className="text-gray-600 mb-4">{selectedSection.content}</p>
+              {selectedSection.image && (
+                <img
+                  src={selectedSection.image}
+                  alt={`${selectedSection.title} image`}
+                  className="rounded-lg w-full h-auto object-cover"
+                />
+              )}
             </div>
           </div>
         )}
+
 
         {/* Chat conversation */}
         <div className="flex-1">
