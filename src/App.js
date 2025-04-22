@@ -46,6 +46,8 @@ const App = () => {
   ];
 
   const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
+
 
   const handleSectionClick = (section) => {
     if (selectedSection && selectedSection.id === section.id) {
@@ -86,6 +88,13 @@ const App = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [conversation]);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.scrollLeft = inputRef.current.scrollWidth;
+    }
+  }, [typedText]);
+  
 
   return (
     <div className="flex flex-col h-screen bg-gray-50 text-gray-800">
@@ -188,15 +197,17 @@ const App = () => {
 
         {/* Typing + bottom morphing button */}
         <div className="px-4 pb-4">
-          <div className="flex items-center bg-white border border-gray-300 rounded-full overflow-hidden shadow-sm">
+          <div className="flex items-center w-full bg-white border border-gray-300 rounded-full overflow-hidden shadow-sm">
             <input
+              ref={inputRef}
               type="text"
               value={typedText}
               onChange={(e) => setInputText(e.target.value)}
               readOnly
               placeholder="Enter a question..."
-              className="flex-1 px-4 py-2 focus:outline-none"
+              className="flex-1 px-4 py-2 focus:outline-none overflow-x-auto scrollbar-hide"
             />
+
             {conversation.length > 0 ? (
               <button className="px-6 py-2 bg-gray-800 text-white rounded-full m-1 text-sm hover:bg-gray-700 transition-all">
                 Book Now
