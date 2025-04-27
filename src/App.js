@@ -98,7 +98,9 @@ const App = () => {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50 text-gray-800">
-      <header className="fixed top-0 left-0 right-0 p-4 border-b border-gray-200 flex items-center justify-between z-20 bg-white">
+      <header className="fixed top-0 left-0 right-0 p-4 border-b rounded-b-2xl border-gray-200 flex items-center justify-between z-20 bg-white shadow-sm"
+      style={{ boxShadow: '0 4px 6px -4px rgba(0, 0, 0, 0.1)' }}
+      >
         <div className="text-xl font-semibold flex items-center space-x-2">
           <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
             <path
@@ -165,20 +167,24 @@ const App = () => {
         )}
 
         <div className="flex-1">
-          {conversation.map((message, index) => (
-            <div key={index} className={`mb-4 ${message.type === 'question' ? 'text-right' : 'text-left'}`}>
-              <div className={`inline-block px-4 py-2 bg-gray-200 text-gray-800 rounded-lg`}>
-                {message.text}
-              </div>
-            </div>
-          ))}
+        {conversation.map((message, index) => (
+        <div key={index} className={`mb-4 ${message.type === 'question' ? 'text-right' : 'text-left'}`}>
+          <div className={`inline-block px-4 py-2 max-w-[95%] bg-gray-200 text-gray-800 rounded-lg`}>
+            {message.text}
+          </div>
+        </div>
+      ))}
+
+
           <div ref={messagesEndRef} />
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 pt-4 z-20">
+      <div className="fixed bottom-0 left-0 right-0 rounded-t-3xl bg-white shadow-lg border-t border-gray-200 pt-4 z-20"
+      style={{ boxShadow: '0 -4px 6px -4px rgba(0, 0, 0, 0.1)' }}
+      >
         <div className="px-4 mb-4">
-          <div className="overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide">
+          <div className="overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide ">
             <div className="inline-flex space-x-2 px-4">
               {questions.map((question) => (
                 <button
