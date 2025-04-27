@@ -57,6 +57,7 @@ const App = () => {
     }
   };
 
+  
   const handleQuestionClick = (question) => {
     if (isTyping) return;
 
@@ -72,17 +73,55 @@ const App = () => {
       } else {
         clearInterval(intervalId);
         setIsTyping(false);
+
         setTimeout(() => {
           setConversation((prev) => [
             ...prev,
             { type: 'question', text: question.text },
-            { type: 'answer', text: question.answer },
           ]);
           setTypedText('');
-          setSelectedQuestion(null);
-        }, 500);
+          setTimeout(() => {
+            typeAnswer(question.answer);
+          }, 300);
+        }, 300);
       }
     }, 50);
+  };
+
+  const typeAnswer = (answerText) => {
+    let answerIndex = 0;
+    let currentAnswer = '';
+
+    const answerIntervalId = setInterval(() => {
+      if (answerIndex < answerText.length) {
+        currentAnswer += answerText[answerIndex];
+
+        setConversation((prev) => {
+          const lastMessage = prev[prev.length - 1];
+          if (lastMessage && lastMessage.type === 'answerTyping') {
+            const updated = [...prev];
+            updated[updated.length - 1] = { type: 'answerTyping', text: currentAnswer };
+            return updated;
+          } else {
+            return [...prev, { type: 'answerTyping', text: currentAnswer }];
+          }
+        });
+
+        answerIndex++;
+      } else {
+        clearInterval(answerIntervalId);
+        setConversation((prev) => {
+          const updated = [...prev];
+          if (updated[updated.length - 1].type === 'answerTyping') {
+            updated[updated.length - 1] = { type: 'answer', text: answerText };
+          }
+          return updated;
+        });
+        setIsTyping(false);
+        setTypedText('');
+        setSelectedQuestion(null);
+      }
+    }, 30);
   };
 
   useEffect(() => {
@@ -94,12 +133,12 @@ const App = () => {
       inputRef.current.scrollLeft = inputRef.current.scrollWidth;
     }
   }, [typedText]);
-  
 
   return (
     <div className="flex flex-col h-screen bg-gray-50 text-gray-800">
-      <header className="fixed top-0 left-0 right-0 p-4 border-b rounded-b-2xl border-gray-200 flex items-center justify-between z-20 bg-white shadow-sm"
-      style={{ boxShadow: '0 4px 6px -4px rgba(0, 0, 0, 0.1)' }}
+      <header
+        className="fixed top-0 left-0 right-0 p-4 border-b rounded-b-2xl border-gray-200 flex items-center justify-between z-20 bg-white shadow-sm"
+        style={{ boxShadow: '0 4px 6px -4px rgba(0, 0, 0, 0.1)' }}
       >
         <div className="text-xl font-semibold flex items-center space-x-2">
           <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
@@ -134,7 +173,7 @@ const App = () => {
               <button
                 key={section.id}
                 onClick={() => handleSectionClick(section)}
-                className=" mt-10 px-4 py-2 bg-white text-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200"
+                className="mt-10 px-4 py-2 bg-white text-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200"
               >
                 {section.title}
               </button>
@@ -167,24 +206,23 @@ const App = () => {
         )}
 
         <div className="flex-1">
-        {conversation.map((message, index) => (
-        <div key={index} className={`mb-4 ${message.type === 'question' ? 'text-right' : 'text-left'}`}>
-          <div className={`inline-block px-4 py-2 max-w-[95%] bg-gray-200 text-gray-800 rounded-lg`}>
-            {message.text}
-          </div>
-        </div>
-      ))}
-
-
+          {conversation.map((message, index) => (
+            <div key={index} className={`mb-4 ${message.type.startsWith('question') ? 'text-right' : 'text-left'}`}>
+              <div className="inline-block px-4 py-2 max-w-[95%] bg-gray-200 text-gray-800 rounded-lg whitespace-pre-wrap">
+                {message.text}
+              </div>
+            </div>
+          ))}
           <div ref={messagesEndRef} />
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 right-0 rounded-t-3xl bg-white shadow-lg border-t border-gray-200 pt-4 z-20"
-      style={{ boxShadow: '0 -4px 6px -4px rgba(0, 0, 0, 0.1)' }}
+      <div
+        className="fixed bottom-0 left-0 right-0 rounded-t-3xl bg-white shadow-lg border-t border-gray-200 pt-4 z-20"
+        style={{ boxShadow: '0 -4px 6px -4px rgba(0, 0, 0, 0.1)' }}
       >
         <div className="px-4 mb-4">
-          <div className="overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide ">
+          <div className="overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide">
             <div className="inline-flex space-x-2 px-4">
               {questions.map((question) => (
                 <button
@@ -201,14 +239,13 @@ const App = () => {
           </div>
         </div>
 
-        {/* Typing + bottom morphing button */}
         <div className="px-4 pb-4">
           <div className="flex items-center w-full bg-white border border-gray-300 rounded-full overflow-hidden shadow-sm">
             <input
               ref={inputRef}
               type="text"
               value={typedText}
-              onChange={(e) => setInputText(e.target.value)}
+              onChange={(e) => {}}
               readOnly
               placeholder="Enter a question..."
               className="flex-1 px-4 py-2 focus:outline-none overflow-x-auto scrollbar-hide"
@@ -236,5 +273,3 @@ const App = () => {
 };
 
 export default App;
-
-
