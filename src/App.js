@@ -59,34 +59,36 @@ const App = () => {
 
   
   const handleQuestionClick = (question) => {
-    if (isTyping) return;
+  if (isTyping) {
+    // Only update the input text visually — don't change anything else
+    setTypedText(question.text);
+    inputRef.current?.scrollTo({ left: inputRef.current.scrollWidth, behavior: 'smooth' });
+    return;
+  }
 
-    setSelectedQuestion(question);
-    setIsTyping(true);
-    setTypedText('');
+  // Only proceed to animation if nothing is currently typing
+  setSelectedQuestion(question);
+  setIsTyping(true);
+  setTypedText('');
 
-    let index = -1;
-    const intervalId = setInterval(() => {
-      if (index < question.text.length) {
-        setTypedText((prevText) => prevText + question.text.charAt(index));
-        index++;
-      } else {
-        clearInterval(intervalId);
-        setIsTyping(false);
-
+  let index = -1;
+  const intervalId = setInterval(() => {
+    if (index < question.text.length) {
+      setTypedText((prevText) => prevText + question.text.charAt(index));
+      index++;
+    } else {
+      clearInterval(intervalId);
+      setTimeout(() => {
+        setConversation((prev) => [...prev, { type: 'question', text: question.text }]);
+        setTypedText('');
         setTimeout(() => {
-          setConversation((prev) => [
-            ...prev,
-            { type: 'question', text: question.text },
-          ]);
-          setTypedText('');
-          setTimeout(() => {
-            typeAnswer(question.answer);
-          }, 300);
+          typeAnswer(question.answer);
         }, 300);
-      }
-    }, 50);
-  };
+      }, 300);
+    }
+  }, 50);
+};
+
 
   const typeAnswer = (answerText) => {
     let answerIndex = 0;
@@ -228,13 +230,15 @@ const App = () => {
                 <button
                   key={question.id}
                   onClick={() => handleQuestionClick(question)}
-                  className={`px-4 py-2 border border-gray-200 rounded-full whitespace-nowrap text-sm hover:bg-gray-100 transition-colors ${
+                  disabled={isTyping}
+                  className={`px-4 py-2 border border-gray-200 rounded-full whitespace-nowrap text-sm transition-colors ${
                     selectedQuestion?.id === question.id ? 'bg-gray-100' : 'bg-white'
-                  }`}
+                  } ${isTyping ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
                 >
                   {question.text}
                 </button>
               ))}
+
             </div>
           </div>
         </div>
