@@ -169,10 +169,15 @@ const App = () => {
         <div className="flex-1">
         {conversation.map((message, index) => (
         <div key={index} className={`mb-4 ${message.type === 'question' ? 'text-right' : 'text-left'}`}>
-          <div className={`inline-block px-4 py-2 max-w-[95%] bg-gray-200 text-gray-800 rounded-lg`}>
-            {message.text}
-          </div>
+    <div
+    className={`inline-block px-4 py-2 max-w-[95%] ${
+      message.type === 'question' ? 'bg-gray-200 text-gray-800' : 'bg-transparent text-gray-700'
+    } rounded-lg`}
+  >
+    {message.text}
+  </div>
         </div>
+
       ))}
 
 
