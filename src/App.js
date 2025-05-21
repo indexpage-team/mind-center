@@ -138,7 +138,7 @@ const App = () => {
   
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50 text-gray-800">
+    <div className="h-[100dvh] flex flex-col bg-gray-50 text-gray-800">
       <header className="fixed top-0 left-0 right-0 p-4 border-b rounded-b-2xl border-gray-200 flex items-center justify-between z-20 bg-white shadow-sm"
       style={{ boxShadow: '0 4px 6px -4px rgba(0, 0, 0, 0.1)' }}
       >
