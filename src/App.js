@@ -225,10 +225,10 @@ const App = () => {
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: -6 }}
     transition={{ duration: isTyping ? 0.15 : 0.3 }}
-    className={`px-4 py-2 whitespace-pre-wrap ${
+    className={`py-2 rounded-3xl whitespace-pre-wrap ${
       isQuestion
-        ? 'bg-gray-200 text-gray-800 rounded- max-w-[80%]'
-        : 'bg-transparent text-gray-700 rounded-lg max-w-full'
+        ? 'bg-gray-200 text-gray-800 rounded- max-w-[80%] px-4'
+        : 'bg-transparent text-gray-700 rounded-lg max-w-full px-2'
     }`}
   >
     {message.text}
@@ -257,7 +257,7 @@ const App = () => {
                   key={question.id}
                   onClick={() => handleQuestionClick(question)}
                   disabled={isTyping}
-                  className={`px-4 py-2 border border-gray-200 rounded-lg whitespace-nowrap text-sm transition-colors ${
+                  className={`px-4 py-2 border border-gray-200 rounded-3xl whitespace-nowrap text-sm transition-colors ${
                     selectedQuestion?.id === question.id ? 'bg-gray-100' : 'bg-white'
                   } ${isTyping ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
                 >
