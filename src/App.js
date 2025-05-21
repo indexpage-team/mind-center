@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import './index.css';
 
 const App = () => {
@@ -151,8 +152,8 @@ const App = () => {
           </svg>
         </div>
         {conversation.length > 0 && (
-          <div className="flex-grow flex justify-center z-10">
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+          <div className="flex-grow flex justify-center z-10 ">
+            <div className="flex flex-wrap justify-cente gap-2 sm:gap-4">
               {sections.map((section) => (
                 <button
                   key={section.id}
@@ -167,7 +168,7 @@ const App = () => {
         )}
       </header>
 
-      <main className="flex-1 mt-16 mb-32 overflow-auto p-4 flex flex-col">
+      <main className="flex-1 mt-16 mb-32  overflow-auto p-4 flex flex-col">
         {conversation.length === 0 && (
           <div className="flex justify-center space-x-4 my-8">
             {sections.map((section) => (
@@ -184,7 +185,7 @@ const App = () => {
 
         {selectedSection && (
           <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-10 p-4">
-            <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-6 relative">
+            <div className="bg-white  rounded-xl shadow-lg max-w-md w-full p-6 relative">
               <button
                 onClick={() => setSelectedSection(null)}
                 className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
@@ -207,18 +208,38 @@ const App = () => {
         )}
 
         <div className="flex-1">
-        {conversation.map((message, index) => (
-        <div key={index} className={`mb-4 ${message.type === 'question' ? 'text-right' : 'text-left'}`}>
-    <div
-    className={`inline-block px-4 py-2 max-w-[95%] ${
-      message.type === 'question' ? 'bg-gray-200 text-gray-800' : 'bg-transparent text-gray-700'
-    } rounded-lg`}
+        
+
+<AnimatePresence initial={false}>
+  {conversation.map((message, index) => {
+    const isQuestion = message.type === 'question';
+    const isTyping = message.type === 'answerTyping';
+
+    return (
+      <motion.div
+  key={index}
+  className={`mb-4 flex ${isQuestion ? 'justify-end' : 'justify-start'}`}
+>
+  <motion.div
+    initial={{ opacity: 0, y: 6 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -6 }}
+    transition={{ duration: isTyping ? 0.15 : 0.3 }}
+    className={`px-4 py-2 whitespace-pre-wrap ${
+      isQuestion
+        ? 'bg-gray-200 text-gray-800 rounded- max-w-[80%]'
+        : 'bg-transparent text-gray-700 rounded-lg max-w-full'
+    }`}
   >
     {message.text}
-  </div>
-        </div>
+  </motion.div>
+</motion.div>
 
-      ))}
+    );
+  })}
+</AnimatePresence>
+
+
 
 
           <div ref={messagesEndRef} />
@@ -236,7 +257,7 @@ const App = () => {
                   key={question.id}
                   onClick={() => handleQuestionClick(question)}
                   disabled={isTyping}
-                  className={`px-4 py-2 border border-gray-200 rounded-full whitespace-nowrap text-sm transition-colors ${
+                  className={`px-4 py-2 border border-gray-200 rounded-lg whitespace-nowrap text-sm transition-colors ${
                     selectedQuestion?.id === question.id ? 'bg-gray-100' : 'bg-white'
                   } ${isTyping ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
                 >
