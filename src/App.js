@@ -184,28 +184,29 @@ const App = () => {
         )}
 
         {selectedSection && (
-          <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-10 p-4">
-            <div className="bg-white  rounded-xl shadow-lg max-w-md w-full p-6 relative">
-              <button
-                onClick={() => setSelectedSection(null)}
-                className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-              <h3 className="text-lg font-medium mb-2">{selectedSection.title}</h3>
-              <p className="text-gray-600 mb-4">{selectedSection.content}</p>
-              {selectedSection.image && (
-                <img
-                  src={selectedSection.image}
-                  alt={`${selectedSection.title} image`}
-                  className="rounded-lg w-full h-auto object-cover"
-                />
-              )}
-            </div>
-          </div>
-        )}
+  <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm z-[9999] flex items-center justify-center px-4 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
+    <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative">
+      <button
+        onClick={() => setSelectedSection(null)}
+        className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <h3 className="text-lg font-semibold mb-3">{selectedSection.title}</h3>
+      <p className="text-gray-600 mb-4">{selectedSection.content}</p>
+      {selectedSection.image && (
+        <img
+          src={selectedSection.image}
+          alt={`${selectedSection.title} image`}
+          className="rounded-lg w-full h-auto object-cover"
+        />
+      )}
+    </div>
+  </div>
+)}
+
 
         <div className="flex-1">
         
